@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Page</title>
+    <style>
+        body { font-family: Arial; background: #f0fdf4; }
+        .box { background: white; max-width: 350px; margin: 50px auto; padding: 25px; border-radius: 10px; }
+        input, button { box-sizing: border-box; width: 100%; padding: 10px; margin: 8px 0; }
+        button { background: #15803d; color: white; border: 0; cursor: pointer; }
+        #message { color: #15803d; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Create Account</h2>
+        <form onsubmit="return validateForm()">
+            <input type="text" id="name" placeholder="Full name" required>
+            <input type="email" id="email" placeholder="Email address" required>
+            <input type="password" id="password" placeholder="Password (at least 6 characters)" minlength="6" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value.trim();
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let message = document.getElementById("message");
+
+            if (name === "") {
+                message.style.color = "red";
+                message.innerText = "Please enter your name.";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                message.style.color = "red";
+                message.innerText = "Passwords do not match.";
+                return false;
+            }
+
+            message.style.color = "green";
+            message.innerText = "Signup successful! (Demo only)";
+            return false; // Keeps this beginner demo on the same page.
+        }
+    </script>
+</body>
+</html>

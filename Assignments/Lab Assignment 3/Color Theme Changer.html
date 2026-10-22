@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Theme Changer</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 60px 20px; background: white; color: black; }
+        button { padding: 12px 18px; margin: 8px; border: 0; border-radius: 6px; cursor: pointer; }
+        #light { background: #eeeeee; }
+        #dark { background: #222222; color: white; }
+        #blue { background: #2563eb; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Choose Your Theme</h1>
+    <p>Click a button to change the page colors.</p>
+    <button id="light" onclick="changeTheme('light')">Light Theme</button>
+    <button id="dark" onclick="changeTheme('dark')">Dark Theme</button>
+    <button id="blue" onclick="changeTheme('blue')">Blue Theme</button>
+
+    <script>
+        function changeTheme(theme) {
+            if (theme === "light") {
+                document.body.style.backgroundColor = "white";
+                document.body.style.color = "black";
+            } else if (theme === "dark") {
+                document.body.style.backgroundColor = "#222222";
+                document.body.style.color = "white";
+            } else if (theme === "blue") {
+                document.body.style.backgroundColor = "#dbeafe";
+                document.body.style.color = "#1e3a8a";
+            }
+        }
+    </script>
+</body>
+</html>
