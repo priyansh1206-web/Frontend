@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPlace | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            background: #f5f6fa;
+            color: #1f2937;
+        }
+
+        .left {
+            width: 50%;
+            min-height: 100vh;
+            background: linear-gradient(140deg, #991b1b, #dc2626);
+            color: white;
+            padding: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 55px;
+        }
+
+        .left h1 {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .left p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #fee2e2;
+            max-width: 450px;
+        }
+
+        .right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 38px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .login-card h2 {
+            font-size: 27px;
+            margin-bottom: 9px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #b91c1c;
+            box-shadow: 0 0 0 3px #fee2e2;
+        }
+
+        .password-wrap {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-wrap input {
+            flex: 1;
+        }
+
+        .show-btn {
+            padding: 0 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0 22px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        .remember input {
+            width: auto;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #b91c1c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #991b1b;
+        }
+
+        .message {
+            color: #b91c1c;
+            font-size: 13px;
+            margin-bottom: 14px;
+            min-height: 16px;
+        }
+
+        .demo {
+            margin-top: 22px;
+            padding: 12px;
+            background: #fef2f2;
+            border-radius: 8px;
+            color: #7f1d1d;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+            }
+
+            .left, .right {
+                width: 100%;
+            }
+
+            .left {
+                min-height: 260px;
+                padding: 35px 25px;
+            }
+
+            .left h1 {
+                font-size: 30px;
+            }
+
+            .brand {
+                margin-bottom: 25px;
+            }
+
+            .right {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="left">
+        <div class="brand">CampusPlace</div>
+
+        <h1>Your career journey starts here.</h1>
+
+        <p>
+            Discover placement opportunities, explore companies,
+            track your applications and take the next step towards
+            your dream career.
+        </p>
+    </section>
+
+    <section class="right">
+        <div class="login-card">
+
+            <h2>Welcome back</h2>
+            <p class="subtitle">Login to your student account</p>
+
+            <form id="loginForm">
+
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your college email"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-btn"
+                            id="showPassword"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="remember">
+                    <input type="checkbox" id="remember">
+                    <label for="remember" style="margin: 0;">
+                        Remember me
+                    </label>
+                </div>
+
+                <p class="message" id="message"></p>
+
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="demo">
+                <strong>Demo Login</strong><br>
+                Enter any valid email address and a password
+                containing at least 6 characters.
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const passwordInput = document.getElementById("password");
+        const message = document.getElementById("message");
+
+        document.getElementById("showPassword").addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                this.textContent = "Show";
+            }
+        });
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                message.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            if (password.length < 6) {
+                message.textContent = "Password must contain at least 6 characters.";
+                return;
+            }
+
+            localStorage.setItem("cp_email", email);
+            localStorage.setItem("cp_logged_in", "true");
+
+            if (document.getElementById("remember").checked) {
+                localStorage.setItem("cp_remember", "true");
+            }
+
+            window.location.href = "2-dashboard.html";
+        });
+    </script>
+
+</body>
+</html>

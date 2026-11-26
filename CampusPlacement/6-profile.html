@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPlace | Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6f8;
+            color: #1f2937;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #b91c1c;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .nav a {
+            color: #fee2e2;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: white;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-top: 20px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 38px;
+            min-width: 0;
+        }
+
+        h1 {
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 13px;
+            padding: 25px;
+            margin-top: 22px;
+        }
+
+        .card h2 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #b91c1c;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .button {
+            border: none;
+            border-radius: 8px;
+            background: #b91c1c;
+            color: white;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background: #991b1b;
+        }
+
+        .resume-box {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .resume-box h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .resume-box p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #b91c1c;
+            color: white;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        #resumeInput {
+            display: none;
+        }
+
+        .resume-info {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 9px;
+            text-align: left;
+        }
+
+        .resume-info strong {
+            display: block;
+            color: #166534;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .resume-info span {
+            font-size: 13px;
+            color: #374151;
+            overflow-wrap: anywhere;
+        }
+
+        .remove-btn {
+            margin-top: 12px;
+            border: none;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .message {
+            margin-top: 14px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .success {
+            color: #15803d;
+        }
+
+        .error {
+            color: #b91c1c;
+        }
+
+        @media (max-width: 800px) {
+            .main {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .nav a {
+                padding: 9px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">CampusPlace</div>
+
+        <nav class="nav">
+            <a href="2-dashboard.html">Dashboard</a>
+            <a href="3-jobs.html">Jobs</a>
+            <a href="5-applications.html">My Applications</a>
+            <a class="active" href="6-profile.html">Profile</a>
+            <a class="logout" href="1-login.html" onclick="localStorage.removeItem('cp_logged_in')">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <h1>My Profile</h1>
+
+        <p class="muted">
+            Manage your personal information and upload your resume.
+        </p>
+
+        <section class="card">
+
+            <h2>Personal Information</h2>
+
+            <form id="profileForm">
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="studentName">Full Name</label>
+                        <input
+                            type="text"
+                            id="studentName"
+                            placeholder="Enter your full name"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="studentEmail"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentPhone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="studentPhone"
+                            placeholder="Enter your phone number"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentCourse">Course</label>
+                        <input
+                            type="text"
+                            id="studentCourse"
+                            placeholder="e.g. B.Tech CSE"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentBranch">Specialization</label>
+                        <input
+                            type="text"
+                            id="studentBranch"
+                            placeholder="e.g. Data Science and AI"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentYear">Current Year</label>
+                        <select id="studentYear">
+                            <option value="">Select year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="studentCgpa">Current CGPA</label>
+                        <input
+                            type="number"
+                            id="studentCgpa"
+                            min="0"
+                            max="10"
+                            step="0.01"
+                            placeholder="e.g. 7.5"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="studentCollege">College / University</label>
+                        <input
+                            type="text"
+                            id="studentCollege"
+                            placeholder="Enter college name"
+                        >
+                    </div>
+
+                </div>
+
+                <button type="submit" class="button">
+                    Save Profile
+                </button>
+
+                <p class="message" id="profileMessage"></p>
+
+            </form>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Resume Upload</h2>
+
+            <div class="resume-box">
+
+                <h3>Upload Your Resume</h3>
+
+                <p>
+                    Select your latest resume in PDF format.
+                    Maximum file size: 5 MB.
+                </p>
+
+                <label for="resumeInput" class="upload-label">
+                    Choose Resume
+                </label>
+
+                <input
+                    type="file"
+                    id="resumeInput"
+                    accept=".pdf,application/pdf"
+                >
+
+                <div class="resume-info" id="resumeInfo">
+
+                    <strong>Resume Selected Successfully</strong>
+
+                    <span id="resumeName"></span>
+
+                    <br>
+
+                    <button
+                        type="button"
+                        class="remove-btn"
+                        id="removeResume"
+                    >
+                        Remove Resume
+                    </button>
+
+                </div>
+
+                <p class="message" id="resumeMessage"></p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    const profileForm = document.getElementById("profileForm");
+    const resumeInput = document.getElementById("resumeInput");
+
+    function loadProfile() {
+        const savedProfile = JSON.parse(
+            localStorage.getItem("cp_profile") || "{}"
+        );
+
+        const loginEmail = localStorage.getItem("cp_email") || "";
+
+        document.getElementById("studentName").value =
+            savedProfile.name || "";
+
+        document.getElementById("studentEmail").value =
+            savedProfile.email || loginEmail;
+
+        document.getElementById("studentPhone").value =
+            savedProfile.phone || "";
+
+        document.getElementById("studentCourse").value =
+            savedProfile.course || "";
+
+        document.getElementById("studentBranch").value =
+            savedProfile.branch || "";
+
+        document.getElementById("studentYear").value =
+            savedProfile.year || "";
+
+        document.getElementById("studentCgpa").value =
+            savedProfile.cgpa || "";
+
+        document.getElementById("studentCollege").value =
+            savedProfile.college || "";
+
+        const savedResume = localStorage.getItem("cp_resume_name");
+
+        if (savedResume) {
+            showResume(savedResume);
+        }
+    }
+
+    profileForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const cgpa = Number(
+            document.getElementById("studentCgpa").value
+        );
+
+        if (document.getElementById("studentCgpa").value &&
+            (cgpa < 0 || cgpa > 10)) {
+            document.getElementById("profileMessage").textContent =
+                "CGPA must be between 0 and 10.";
+
+            document.getElementById("profileMessage").className =
+                "message error";
+
+            return;
+        }
+
+        const profile = {
+            name: document.getElementById("studentName").value.trim(),
+            email: document.getElementById("studentEmail").value.trim(),
+            phone: document.getElementById("studentPhone").value.trim(),
+            course: document.getElementById("studentCourse").value.trim(),
+            branch: document.getElementById("studentBranch").value.trim(),
+            year: document.getElementById("studentYear").value,
+            cgpa: document.getElementById("studentCgpa").value,
+            college: document.getElementById("studentCollege").value.trim()
+        };
+
+        localStorage.setItem("cp_profile", JSON.stringify(profile));
+        localStorage.setItem("cp_email", profile.email);
+
+        const message = document.getElementById("profileMessage");
+
+        message.textContent = "Profile saved successfully!";
+        message.className = "message success";
+    });
+
+    function showResume(fileName) {
+        document.getElementById("resumeName").textContent = fileName;
+        document.getElementById("resumeInfo").style.display = "block";
+    }
+
+    resumeInput.addEventListener("change", function () {
+        const file = this.files[0];
+        const message = document.getElementById("resumeMessage");
+
+        if (!file) {
+            return;
+        }
+
+        const isPDF =
+            file.type === "application/pdf" ||
+            file.name.toLowerCase().endsWith(".pdf");
+
+        if (!isPDF) {
+            message.textContent = "Only PDF files are allowed.";
+            message.className = "message error";
+            this.value = "";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            message.textContent = "File size must be less than 5 MB.";
+            message.className = "message error";
+            this.value = "";
+            return;
+        }
+
+        localStorage.setItem("cp_resume_name", file.name);
+
+        showResume(file.name);
+
+        message.textContent = "Resume selected successfully.";
+        message.className = "message success";
+    });
+
+    document.getElementById("removeResume").addEventListener("click", function () {
+        localStorage.removeItem("cp_resume_name");
+
+        resumeInput.value = "";
+
+        document.getElementById("resumeInfo").style.display = "none";
+
+        const message = document.getElementById("resumeMessage");
+
+        message.textContent = "Resume removed.";
+        message.className = "message success";
+    });
+
+    loadProfile();
+</script>
+
+</body>
+</html>

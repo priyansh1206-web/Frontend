@@ -1,0 +1,529 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPlace | Jobs</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6f8;
+            color: #1f2937;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #b91c1c;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .nav a {
+            color: #fee2e2;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: white;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-top: 20px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 38px;
+            min-width: 0;
+        }
+
+        h1 {
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 14px;
+            margin: 28px 0 22px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            min-width: 0;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #374151;
+            outline: none;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: #b91c1c;
+        }
+
+        .results-info {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .list-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 13px;
+            padding: 5px 22px;
+        }
+
+        .job {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .job:last-child {
+            border-bottom: none;
+        }
+
+        .job-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-info h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .job-meta {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .tag {
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            padding: 6px 10px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .button {
+            display: inline-block;
+            background: #b91c1c;
+            color: white;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .button:hover {
+            background: #991b1b;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 45px 15px;
+            color: #6b7280;
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .main {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .nav a {
+                padding: 9px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .job {
+                flex-wrap: wrap;
+            }
+
+            .job-info {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">CampusPlace</div>
+
+        <nav class="nav">
+            <a href="2-dashboard.html">Dashboard</a>
+            <a class="active" href="3-jobs.html">Jobs</a>
+            <a href="5-applications.html">My Applications</a>
+            <a href="6-profile.html">Profile</a>
+            <a class="logout" href="1-login.html" onclick="localStorage.removeItem('cp_logged_in')">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <h1>Job Listings</h1>
+
+        <p class="muted">
+            Explore placement opportunities and find the right role for you.
+        </p>
+
+        <section class="filters">
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search company or role..."
+            >
+
+            <select id="typeFilter">
+                <option value="">Job type</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Remote">Remote</option>
+            </select>
+
+            <select id="packageFilter">
+                <option value="">Package</option>
+                <option value="0-5">Below 5 LPA</option>
+                <option value="5-8">5 - 8 LPA</option>
+                <option value="8-12">8 - 12 LPA</option>
+                <option value="12+">12+ LPA</option>
+            </select>
+
+            <select id="locationFilter">
+                <option value="">Location</option>
+                <option value="Pune">Pune</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Remote">Remote</option>
+                <option value="Noida">Noida</option>
+            </select>
+
+        </section>
+
+        <p class="results-info" id="resultsInfo"></p>
+
+        <section class="list-card" id="jobList">
+
+            <div class="job"
+                data-company="TCS"
+                data-role="Software Engineer"
+                data-type="Full-time"
+                data-package="7"
+                data-location="Pune"
+                data-id="tcs">
+
+                <div class="job-info">
+                    <h3>Software Engineer</h3>
+                    <p class="job-meta">
+                        TCS · Pune · 7 LPA · Last date 12 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('tcs')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Infosys"
+                data-role="Systems Engineer"
+                data-type="Full-time"
+                data-package="6"
+                data-location="Remote"
+                data-id="infosys">
+
+                <div class="job-info">
+                    <h3>Systems Engineer</h3>
+                    <p class="job-meta">
+                        Infosys · Remote · 6 LPA · Last date 14 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('infosys')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Zoho"
+                data-role="Associate Developer"
+                data-type="Full-time"
+                data-package="9"
+                data-location="Chennai"
+                data-id="zoho">
+
+                <div class="job-info">
+                    <h3>Associate Developer</h3>
+                    <p class="job-meta">
+                        Zoho · Chennai · 9 LPA · Last date 10 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('zoho')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Wipro"
+                data-role="Project Engineer"
+                data-type="Full-time"
+                data-package="6.5"
+                data-location="Bengaluru"
+                data-id="wipro">
+
+                <div class="job-info">
+                    <h3>Project Engineer</h3>
+                    <p class="job-meta">
+                        Wipro · Bengaluru · 6.5 LPA · Last date 15 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('wipro')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Accenture"
+                data-role="Data Analyst Intern"
+                data-type="Internship"
+                data-package="3"
+                data-location="Mumbai"
+                data-id="accenture">
+
+                <div class="job-info">
+                    <h3>Data Analyst Intern</h3>
+                    <p class="job-meta">
+                        Accenture · Mumbai · 25,000/month · Last date 18 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('accenture')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Adobe"
+                data-role="Frontend Developer"
+                data-type="Full-time"
+                data-package="14"
+                data-location="Noida"
+                data-id="adobe">
+
+                <div class="job-info">
+                    <h3>Frontend Developer</h3>
+                    <p class="job-meta">
+                        Adobe · Noida · 14 LPA · Last date 20 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('adobe')">
+                    View Details
+                </a>
+            </div>
+
+            <div class="job"
+                data-company="Microsoft"
+                data-role="Software Development Intern"
+                data-type="Internship"
+                data-package="12"
+                data-location="Noida"
+                data-id="microsoft">
+
+                <div class="job-info">
+                    <h3>Software Development Intern</h3>
+                    <p class="job-meta">
+                        Microsoft · Noida · 12 LPA · Last date 22 December 2026
+                    </p>
+                </div>
+
+                <span class="tag">Eligible</span>
+                <a class="button" href="4-job-details.html" onclick="selectJob('microsoft')">
+                    View Details
+                </a>
+            </div>
+
+        </section>
+
+        <div class="empty" id="emptyMessage">
+            <h3>No jobs found</h3>
+            <p>Try changing your search or filters.</p>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const typeFilter = document.getElementById("typeFilter");
+    const packageFilter = document.getElementById("packageFilter");
+    const locationFilter = document.getElementById("locationFilter");
+
+    const jobs = Array.from(document.querySelectorAll(".job"));
+    const resultsInfo = document.getElementById("resultsInfo");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    function selectJob(jobId) {
+        localStorage.setItem("cp_selected_job", jobId);
+    }
+
+    function filterJobs() {
+        const search = searchInput.value.toLowerCase().trim();
+        const type = typeFilter.value;
+        const packageRange = packageFilter.value;
+        const location = locationFilter.value;
+
+        let visibleCount = 0;
+
+        jobs.forEach(function (job) {
+            const company = job.dataset.company.toLowerCase();
+            const role = job.dataset.role.toLowerCase();
+            const jobType = job.dataset.type;
+            const salary = Number(job.dataset.package);
+            const jobLocation = job.dataset.location;
+
+            const matchesSearch =
+                company.includes(search) || role.includes(search);
+
+            const matchesType =
+                !type || jobType === type;
+
+            let matchesPackage = true;
+
+            if (packageRange === "0-5") {
+                matchesPackage = salary < 5;
+            } else if (packageRange === "5-8") {
+                matchesPackage = salary >= 5 && salary < 8;
+            } else if (packageRange === "8-12") {
+                matchesPackage = salary >= 8 && salary <= 12;
+            } else if (packageRange === "12+") {
+                matchesPackage = salary > 12;
+            }
+
+            const matchesLocation =
+                !location || jobLocation === location;
+
+            const show =
+                matchesSearch &&
+                matchesType &&
+                matchesPackage &&
+                matchesLocation;
+
+            job.style.display = show ? "flex" : "none";
+
+            if (show) {
+                visibleCount++;
+            }
+        });
+
+        resultsInfo.textContent =
+            visibleCount + " job(s) found";
+
+        emptyMessage.style.display =
+            visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterJobs);
+    typeFilter.addEventListener("change", filterJobs);
+    packageFilter.addEventListener("change", filterJobs);
+    locationFilter.addEventListener("change", filterJobs);
+
+    filterJobs();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPlace | Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+            background: #f5f6f8;
+        }
+
+        body {
+            min-width: 1100px;
+        }
+
+        .app {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            min-height: 900px;
+            background: #b91c1c;
+            color: #fff;
+            padding: 34px 22px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+
+        .brand span {
+            opacity: 0.75;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav a {
+            color: #fee2e2;
+            text-decoration: none;
+            padding: 13px 14px;
+            border-radius: 9px;
+            font-size: 15px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #fff;
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .nav .logout {
+            margin-top: 22px;
+            color: #fecaca;
+        }
+
+        .main {
+            flex: 1;
+            padding: 42px 48px 54px;
+            min-width: 0;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .title h1 {
+            font-size: 30px;
+            line-height: 1.15;
+            margin-bottom: 7px;
+        }
+
+        .muted {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: #991b1b;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .stats {
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 28px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+        }
+
+        .stat {
+            min-height: 112px;
+        }
+
+        .label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: 700;
+            color: #991b1b;
+        }
+
+        .section-grid {
+            grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+            margin-top: 20px;
+        }
+
+        .card h2,
+        .card h3 {
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+        }
+
+        .job {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 17px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .job:last-child {
+            border-bottom: 0;
+        }
+
+        .job-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-info b {
+            font-size: 15px;
+        }
+
+        .job-meta {
+            margin-top: 5px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #f3f4f6;
+            color: #4b5563;
+            white-space: nowrap;
+        }
+
+        .tag.green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .tag.yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .tag.red {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .button {
+            display: inline-block;
+            border: 0;
+            background: #b91c1c;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .button:hover {
+            background: #991b1b;
+        }
+
+        .button.light {
+            background: #fff1f2;
+            color: #991b1b;
+        }
+
+        .button.dark {
+            background: #1f2937;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .input-box,
+        .input {
+            border: 1px solid #d1d5db;
+            background: #fff;
+            border-radius: 9px;
+            padding: 12px 14px;
+            color: #6b7280;
+            min-height: 44px;
+        }
+
+        .input {
+            width: 100%;
+            font: inherit;
+            color: #1f2937;
+        }
+
+        .list-card {
+            margin-top: 18px;
+        }
+
+        .details-grid {
+            grid-template-columns: minmax(0, 2fr) 330px;
+            margin-top: 25px;
+        }
+
+        .side-stack {
+            display: grid;
+            gap: 18px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .steps {
+            display: grid;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: #991b1b;
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .summary {
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 25px;
+        }
+
+        .application {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr 120px 100px 120px;
+            gap: 16px;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .application:last-child {
+            border-bottom: 0;
+        }
+
+        .table-head {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-grid {
+            grid-template-columns: 1.8fr 1fr;
+            margin-top: 25px;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .profile-head {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .big-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: #991b1b;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 8px;
+            background: #f3f4f6;
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress span {
+            display: block;
+            width: 80%;
+            height: 100%;
+            background: #b91c1c;
+        }
+
+        .login-page {
+            min-height: 900px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            width: 100%;
+        }
+
+        .login-left {
+            background: #b91c1c;
+            color: #fff;
+            padding: 110px 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-left .brand {
+            font-size: 26px;
+            margin-bottom: 32px;
+        }
+
+        .login-left h1 {
+            font-size: 48px;
+            line-height: 1.08;
+            max-width: 620px;
+            margin-bottom: 18px;
+        }
+
+        .login-left p {
+            max-width: 520px;
+            color: #fee2e2;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .login-right {
+            background: #f5f6f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .login-card {
+            width: 430px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 38px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .login-card h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-button {
+            width: 100%;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .small-center {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .event {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event:last-child {
+            border-bottom: 0;
+        }
+
+        .event b {
+            font-size: 14px;
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #fff;
+            color: #b91c1c;
+            align-items: center;
+            justify-content: center;
+            margin-right: 9px;
+            font-size: 15px;
+        }
+
+        .sidebar .brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .note {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .success {
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+        }
+
+        .resume {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 15px;
+            background: #f9fafb;
+            border: 1px dashed #d1d5db;
+            border-radius: 10px;
+        }
+
+        .footer-space {
+            height: 10px;
+        }
+
+        @media (max-width: 1100px) {
+            body {
+                min-width: 0;
+            }
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main {
+                padding: 30px;
+            }
+
+            .stats,
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-grid,
+            .details-grid,
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-left {
+                padding: 70px;
+            }
+
+            .login-left h1 {
+                font-size: 38px;
+            }
+
+            .application {
+                grid-template-columns: 1.5fr 1fr 90px 90px 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+     
+        <aside class="sidebar">
+
+            <div class="brand">
+                <span class="brand-mark">CP</span>
+                CampusPlace
+            </div>
+
+            <nav class="nav">
+                <a class="active" href="2-dashboard.html">Dashboard</a>
+                <a href="3-jobs.html">Jobs</a>
+                <a href="5-applications.html">My Applications</a>
+                <a href="6-profile.html">Profile</a>
+                <a class="logout" href="1-login.html">Logout</a>
+            </nav>
+
+        </aside>
+
+        
+        <main class="main">
+
+            
+            <div class="top">
+
+                <div class="title">
+                    <h1>Hi Priyansh, good to see you</h1>
+
+                    <p class="muted">
+                        Here is what is happening on campus today.
+                    </p>
+                </div>
+
+                <div class="avatar">
+                    PA
+                </div>
+
+            </div>
+
+          
+            <div class="grid stats">
+
+                <div class="card stat">
+                    <div class="label">Open drives</div>
+                    <div class="number">12</div>
+                </div>
+
+                <div class="card stat">
+                    <div class="label">Applications sent</div>
+                    <div class="number">5</div>
+                </div>
+
+                <div class="card stat">
+                    <div class="label">Interviews</div>
+                    <div class="number">2</div>
+                </div>
+
+                <div class="card stat">
+                    <div class="label">Offer received</div>
+                    <div class="number">1</div>
+                </div>
+
+            </div>
+
+            
+            <div class="grid section-grid">
+
+               
+                <section class="card">
+
+                    <h2>Recommended for you</h2>
+
+                    <div class="job">
+
+                        <div class="job-info">
+                            <b>Software Engineer</b>
+
+                            <div class="muted job-meta">
+                                TCS · Pune · 7 LPA
+                            </div>
+                        </div>
+
+                        <span class="tag green">
+                            Eligible
+                        </span>
+
+                        <a class="button" href="4-job-details.html">
+                            View job
+                        </a>
+
+                    </div>
+
+                    <div class="job">
+
+                        <div class="job-info">
+                            <b>Systems Engineer</b>
+
+                            <div class="muted job-meta">
+                                Infosys · Remote · 6 LPA
+                            </div>
+                        </div>
+
+                        <span class="tag green">
+                            Eligible
+                        </span>
+
+                        <a class="button" href="4-job-details.html">
+                            View job
+                        </a>
+
+                    </div>
+
+                    <div class="job">
+
+                        <div class="job-info">
+                            <b>Associate Developer</b>
+
+                            <div class="muted job-meta">
+                                Zoho · Chennai · 9 LPA
+                            </div>
+                        </div>
+
+                        <span class="tag green">
+                            Eligible
+                        </span>
+
+                        <a class="button" href="4-job-details.html">
+                            View job
+                        </a>
+
+                    </div>
+
+                </section>
+
+               
+                <section class="card">
+
+                    <h2>Upcoming</h2>
+
+                    <div class="event">
+                        <b>Aptitude test · TCS</b>
+                        <p class="muted">Tomorrow · 10:00 AM</p>
+                    </div>
+
+                    <div class="event">
+                        <b>Interview · Wipro</b>
+                        <p class="muted">Friday · 2:30 PM</p>
+                    </div>
+
+                    <div class="event">
+                        <b>Resume deadline</b>
+                        <p class="muted">Sunday · 11:59 PM</p>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

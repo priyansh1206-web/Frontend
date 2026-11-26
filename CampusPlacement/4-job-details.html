@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPlace | Job Details</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6f8;
+            color: #1f2937;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #b91c1c;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .nav a {
+            color: #fee2e2;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: white;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-top: 20px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 38px;
+            min-width: 0;
+        }
+
+        .back {
+            display: inline-block;
+            color: #991b1b;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 9px;
+        }
+
+        .muted {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .package {
+            color: #991b1b;
+            font-size: 22px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .detail-box {
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 9px;
+        }
+
+        .detail-box small {
+            color: #6b7280;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .detail-box strong {
+            font-size: 14px;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #4b5563;
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            border: none;
+            border-radius: 8px;
+            background: #b91c1c;
+            color: white;
+            padding: 13px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        .apply-btn:hover {
+            background: #991b1b;
+        }
+
+        .apply-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .success {
+            color: #15803d;
+        }
+
+        .error {
+            color: #b91c1c;
+        }
+
+        @media (max-width: 800px) {
+            .details-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .main {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .app {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .nav a {
+                padding: 9px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">CampusPlace</div>
+
+        <nav class="nav">
+            <a href="2-dashboard.html">Dashboard</a>
+            <a class="active" href="3-jobs.html">Jobs</a>
+            <a href="5-applications.html">My Applications</a>
+            <a href="6-profile.html">Profile</a>
+            <a class="logout" href="1-login.html" onclick="localStorage.removeItem('cp_logged_in')">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <a class="back" href="3-jobs.html">← Back to Jobs</a>
+
+        <section class="card">
+
+            <div class="heading">
+                <div>
+                    <h1 id="jobTitle">Software Engineer</h1>
+                    <p class="muted" id="companyName">TCS</p>
+                    <span class="tag">Placement Opportunity</span>
+                </div>
+
+                <div class="package" id="packageValue">7 LPA</div>
+            </div>
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+                    <small>Location</small>
+                    <strong id="locationValue">Pune</strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Job Type</small>
+                    <strong id="typeValue">Full-time</strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Last Date to Apply</small>
+                    <strong id="lastDateValue">12 December 2026</strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Minimum CGPA</small>
+                    <strong id="cgpaValue">6.0</strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Eligible Branch</small>
+                    <strong id="branchValue">CSE / IT</strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Experience</small>
+                    <strong>Fresher</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+            <h2>About the Role</h2>
+            <p class="muted" id="aboutText">
+                Work with the engineering team to develop, test and maintain
+                software applications. You will contribute to real-world
+                projects and collaborate with experienced professionals.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>Required Skills</h2>
+            <ul id="skillsList">
+                <li>Programming fundamentals</li>
+                <li>Data Structures and Algorithms</li>
+                <li>Problem-solving skills</li>
+                <li>Communication and teamwork</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Eligibility Criteria</h2>
+            <ul>
+                <li>Student must be pursuing a relevant undergraduate degree.</li>
+                <li>Minimum CGPA requirement should be fulfilled.</li>
+                <li>Basic programming and problem-solving knowledge.</li>
+                <li>No active backlogs preferred.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Apply for this Job</h2>
+
+            <p class="muted">
+                Make sure your student profile and resume are updated
+                before applying.
+            </p>
+
+            <button class="apply-btn" id="applyButton" onclick="applyForJob()">
+                Apply Now
+            </button>
+
+            <p class="message" id="applyMessage"></p>
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    const jobData = {
+        tcs: {
+            title: "Software Engineer",
+            company: "TCS",
+            package: "7 LPA",
+            location: "Pune",
+            type: "Full-time",
+            lastDate: "12 December 2026",
+            cgpa: "6.0",
+            branch: "CSE / IT",
+            about: "Work with the engineering team to develop, test and maintain software applications. Contribute to real-world projects and collaborate with experienced professionals.",
+            skills: ["Programming fundamentals", "Data Structures and Algorithms", "Problem-solving", "Communication and teamwork"]
+        },
+
+        infosys: {
+            title: "Systems Engineer",
+            company: "Infosys",
+            package: "6 LPA",
+            location: "Remote",
+            type: "Full-time",
+            lastDate: "14 December 2026",
+            cgpa: "6.0",
+            branch: "CSE / IT",
+            about: "Work on software development, system maintenance and technology solutions for business clients.",
+            skills: ["Java or Python", "SQL basics", "Problem-solving", "Teamwork"]
+        },
+
+        zoho: {
+            title: "Associate Developer",
+            company: "Zoho",
+            package: "9 LPA",
+            location: "Chennai",
+            type: "Full-time",
+            lastDate: "10 December 2026",
+            cgpa: "7.0",
+            branch: "CSE / IT",
+            about: "Build and maintain software products while working with development and testing teams.",
+            skills: ["Java or C++", "OOP concepts", "Data Structures", "Logical reasoning"]
+        },
+
+        wipro: {
+            title: "Project Engineer",
+            company: "Wipro",
+            package: "6.5 LPA",
+            location: "Bengaluru",
+            type: "Full-time",
+            lastDate: "15 December 2026",
+            cgpa: "6.0",
+            branch: "CSE / IT",
+            about: "Support software engineering projects and help deliver technology solutions to clients.",
+            skills: ["Programming", "Communication", "Analytical thinking", "Teamwork"]
+        },
+
+        accenture: {
+            title: "Data Analyst Intern",
+            company: "Accenture",
+            package: "25,000/month",
+            location: "Mumbai",
+            type: "Internship",
+            lastDate: "18 December 2026",
+            cgpa: "6.0",
+            branch: "CSE / IT / Data Science",
+            about: "Assist in analysing datasets, preparing reports and supporting data-driven business decisions.",
+            skills: ["Python", "Excel", "SQL", "Data analysis"]
+        },
+
+        adobe: {
+            title: "Frontend Developer",
+            company: "Adobe",
+            package: "14 LPA",
+            location: "Noida",
+            type: "Full-time",
+            lastDate: "20 December 2026",
+            cgpa: "7.0",
+            branch: "CSE / IT",
+            about: "Develop responsive user interfaces and collaborate with design and engineering teams.",
+            skills: ["HTML", "CSS", "JavaScript", "React basics"]
+        },
+
+        microsoft: {
+            title: "Software Development Intern",
+            company: "Microsoft",
+            package: "12 LPA",
+            location: "Noida",
+            type: "Internship",
+            lastDate: "22 December 2026",
+            cgpa: "7.0",
+            branch: "CSE / IT",
+            about: "Work with software engineers on development tasks, testing and product improvements.",
+            skills: ["Programming", "Data Structures", "Algorithms", "Problem-solving"]
+        }
+    };
+
+    const selectedJobId =
+        localStorage.getItem("cp_selected_job") || "tcs";
+
+    const selectedJob = jobData[selectedJobId] || jobData.tcs;
+
+    document.getElementById("jobTitle").textContent = selectedJob.title;
+    document.getElementById("companyName").textContent = selectedJob.company;
+    document.getElementById("packageValue").textContent = selectedJob.package;
+    document.getElementById("locationValue").textContent = selectedJob.location;
+    document.getElementById("typeValue").textContent = selectedJob.type;
+    document.getElementById("lastDateValue").textContent = selectedJob.lastDate;
+    document.getElementById("cgpaValue").textContent = selectedJob.cgpa;
+    document.getElementById("branchValue").textContent = selectedJob.branch;
+    document.getElementById("aboutText").textContent = selectedJob.about;
+
+    document.getElementById("skillsList").innerHTML =
+        selectedJob.skills.map(skill => `<li>${skill}</li>`).join("");
+
+    function getApplications() {
+        return JSON.parse(localStorage.getItem("cp_applications") || "[]");
+    }
+
+    function updateApplyButton() {
+        const applications = getApplications();
+
+        const alreadyApplied = applications.some(function (application) {
+            return application.jobId === selectedJobId;
+        });
+
+        const button = document.getElementById("applyButton");
+        const message = document.getElementById("applyMessage");
+
+        if (alreadyApplied) {
+            button.disabled = true;
+            button.textContent = "Already Applied";
+            message.textContent = "You have already applied for this job.";
+            message.className = "message success";
+        }
+    }
+
+    function applyForJob() {
+        const applications = getApplications();
+
+        const alreadyApplied = applications.some(function (application) {
+            return application.jobId === selectedJobId;
+        });
+
+        const message = document.getElementById("applyMessage");
+
+        if (alreadyApplied) {
+            message.textContent = "You have already applied for this job.";
+            message.className = "message error";
+            return;
+        }
+
+        const application = {
+            jobId: selectedJobId,
+            company: selectedJob.company,
+            role: selectedJob.title,
+            package: selectedJob.package,
+            location: selectedJob.location,
+            status: "Applied",
+            appliedOn: new Date().toLocaleDateString()
+        };
+
+        applications.push(application);
+
+        localStorage.setItem(
+            "cp_applications",
+            JSON.stringify(applications)
+        );
+
+        message.textContent = "Application submitted successfully!";
+        message.className = "message success";
+
+        const button = document.getElementById("applyButton");
+        button.disabled = true;
+        button.textContent = "Already Applied";
+    }
+
+    updateApplyButton();
+</script>
+
+</body>
+</html>
